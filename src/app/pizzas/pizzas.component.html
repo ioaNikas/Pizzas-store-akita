@@ -1,0 +1,25 @@
+<div>
+  <h2>Toppings</h2>
+  <button type="button" *ngFor="let topping of toppings" (click)="toggleTopping(topping)">
+    {{topping}} </button>
+</div>
+
+<h2>Pizzas</h2>
+<div *ngFor="let pizza of pizzas$ | async" (click)="setActivePizza(pizza.id)">
+  <div class="card pizza" [ngClass]="{'active': pizza.id === activePizzaId}">
+    <div class="card-body">
+      <img src="http://www.sclance.com/pngs/pizza-png/pizza_png_1038322.png">
+      <div class="card-text" *ngIf="pizza.id === activePizzaId">
+        <h3>Here are the topping for this pizza </h3>
+        <span class="badge badge-primary pizza-topping"
+          *ngFor="let topping of activePizzaToppings$ | async; let last = last;">
+          <b>{{topping}} </b> <span (click)="toggleTopping(topping)" style="cursor: pointer; color: red">(X) </span>
+        </span>
+        <span *ngIf="!(activePizzaToppings$ | async).length">No toppings yet</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="centered">
+  <button type="button" (click)="newPizza()">Add A New Pizza</button>
+</div>
